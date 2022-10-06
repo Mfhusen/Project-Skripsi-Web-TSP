@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Project Skripsi Web TSP - Muhammad Fiqih Husain</title>
+
+    <!-- Import Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Import External File CSS -->
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="flex-container">
+      <!-- Pembungkus untuk menampilkan konfigurasi algoritma genetika dan hasil yang diperoleh -->
+      <div class="left-item">
+        <h1>
+          Aplikasi Penyelesaian Permasalahan TSP Dengan Mengimplementasikan
+          Algoritma Genetika
+        </h1>
+        <p>
+          Aplikasi ini dibuat untuk memenuhi tugas akhir dengan topik
+          implementasi algoritma genetika untuk menyelesaikan permasalahan
+          travelling salesman problem studi kasus rute perjalanan wisata
+        </p>
+
+        <div class="lokasi-tujuan">
+          <h2>Lokasi Destinasi</h2>
+          <button type="button" id="tambah_lokasi_tujuan">Tambah Lokasi</button>
+          <button type="button" id="default_lokasi_tujuan">
+            Default Lokasi
+          </button>
+
+          <input
+            type="text"
+            class="lokasi_tujuan m-wrap"
+            id="lokasi_tujuan_0"
+            data-id="0"
+            autocomplete="off"
+          />
+
+          <input
+            type="hidden"
+            id="lokasi_tujuan_0_latitude"
+            autocomplete="off"
+          />
+
+          <input
+            type="hidden"
+            id="lokasi_tujuan_0_longitude"
+            autocomplete="off"
+          />
+        </div>
+
+        <!-- Untuk menampilkan konfigurasi algoritma genetika yang digunakan -->
+        <div class="konfigurasi-algoritma">
+          <h2>Konfigurasi Algoritma Genetika</h2>
+
+          <!-- Memilih tipe perjalanan -->
+          <label for="tipe-perjalanan">Tipe Perjalanan</label>
+          <select id="tipe-perjalanan" class="m-wrap">
+            <option value="DRIVING" selected>Mobil</option>
+            <option value="WALKING">Jalan Kaki</option>
+          </select>
+
+          <!-- Set parameter untuk ukuran jumlah populasi -->
+          <label for="jumlah-populasi">Jumlah Populasi</label>
+          <select id="jumlah-populasi" class="m-wrap">
+            <option value="10">10</option>
+            <option value="20">50</option>
+            <option value="50" selected>100</option>
+            <option value="100">150</option>
+            <option value="200">200</option>
+          </select>
+
+          <!-- Set parameter untuk rasio mutasi -->
+          <label for="rasio-mutasi">Rasio Mutasi</label>
+          <select id="rasio-mutasi" class="m-wrap">
+            <option value="0.0">0.0</option>
+            <option value="0.1">0.1</option>
+            <option value="0.2">0.2</option>
+            <option value="0.3">0.3</option>
+            <option value="0.4">0.4</option>
+            <option value="0.5" selected>0.5</option>
+            <option value="0.6">0.6</option>
+            <option value="0.7">0.7</option>
+            <option value="0.8">0.8</option>
+            <option value="0.9">0.9</option>
+            <option value="1.0">1.0</option>
+          </select>
+
+          <!-- Set parameter untuk rasio crossover -->
+          <label for="rasio-crossover">Rasio Crossover</label>
+          <select id="rasio-crossover" class="m-wrap">
+            <option value="0.0">0.0</option>
+            <option value="0.1">0.1</option>
+            <option value="0.2">0.2</option>
+            <option value="0.3">0.3</option>
+            <option value="0.4">0.4</option>
+            <option value="0.5" selected>0.5</option>
+            <option value="0.6">0.6</option>
+            <option value="0.7">0.7</option>
+            <option value="0.8">0.8</option>
+            <option value="0.9">0.9</option>
+            <option value="1.0">1.0</option>
+          </select>
+
+          <!-- Memilih penggunaan elitism -->
+          <label for="elitism">Elitism</label>
+          <select id="elitism" class="m-wrap">
+            <option value="1" selected>Enabled</option>
+            <option value="0">Disabled</option>
+          </select>
+
+          <!-- Set parameter untuk jumlah generasi dalam algoritma genetika -->
+          <label for="maksimal-generasi">Generasi</label>
+          <select id="maksimal-generasi" class="m-wrap">
+            <option value="10">10</option>
+            <option value="20">50</option>
+            <option value="50" selected>100</option>
+            <option value="100">150</option>
+            <option value="200">200</option>
+          </select>
+
+          <!-- Untuk menjalankan sistem  -->
+          <button id="cari-rute">Cari Rute</button>
+        </div>
+
+        <hr />
+        <!-- Pembungkus konten dalam menampilkan hasil -->
+        <div class="info-hasil">
+          <h2>Info Hasil</h2>
+
+          <!-- Menampilkan jumlah lokasi yang dihitung -->
+          <h3>Jumlah Lokasi:</h3>
+          <p id="jumlah-lokasi">0</p>
+          <br />
+
+          <!-- Menampilkan jumlah generasi yang digunakan -->
+          <div class="info-algoritma" style="display: none">
+            <h3>Generasi</h3>
+            <p id="jumlah-generasi">0</p>
+          </div>
+
+          <!-- Menampilkan jumlah populasi yang digunakan -->
+          <div class="info-algoritma" style="display: none">
+            <h3>Jumlah Populasi:</h3>
+            <p id="jumlah-populasi">0</p>
+          </div>
+
+          <!-- Menampilkan hasil estimasi jarak rute perjalanan -->
+          <div class="info-algoritma" style="display: none">
+            <h3>Total Estimasi Jarak:</h3>
+            <p id="estimasi-jarak">0</p>
+          </div>
+
+          <!-- Menampilkan rangkuman arah rute perjalanan -->
+          <div class="info-algoritma" style="display: none">
+            <h3>Rangkuman Rute</h3>
+            <div id="rangkuman-rute"></div>
+            <button type="button" onclick="$('#panel-petunjuk').toggle()">
+              Detail Rute Perjalanan
+            </button>
+            <div id="panel-petunjuk"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pembungkus untuk menampilkan google maps -->
+      <div class="right-item">
+        <div id="canvas-googleMaps"></div>
+      </div>
+    </div>
+
+    <!-- Memanggil kode api untuk google maps dan jquery -->
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyA0BXk4lNbVzC-ltNRpAKH5EgbZvTktf_Q&libraries=places"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
+
+
+    <!-- Memanggil eksternal kode javascript -->
+    <script type="text/javascript" src="./fungsiWeb.js"></script>
+  </body>
+</html>
